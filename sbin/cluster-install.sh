@@ -16,11 +16,11 @@ SITE=`echo $CLUSTER | cut -d'-' -f1`
 KUBECONFIG=`realpath $2`
 BUCKET=`realpath $3`
 
-# Get global parameters
-source global.param
-
 # Move to script directory
 cd "$( dirname "${BASH_SOURCE[0]}" )"
+
+# Get global parameters
+source global.param
 
 cp $BUCKET $TMP_DIR/bucket.yaml
 
