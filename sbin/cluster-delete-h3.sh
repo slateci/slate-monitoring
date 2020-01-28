@@ -23,11 +23,8 @@ source global.param
 kubectl delete service/thanos-store --namespace $NAMESPACE --kubeconfig $KUBECONFIG
 
 # Delete the old installation
-helm delete --purge prometheus-operator --kubeconfig $KUBECONFIG
+helm delete prometheus-operator --namespace $NAMESPACE --kubeconfig $KUBECONFIG
 sleep 5
-
-# Remove leftover crds
-kubectl delete crd alertmanagers.monitoring.coreos.com prometheuses.monitoring.coreos.com  servicemonitors.monitoring.coreos.com prometheusrules.monitoring.coreos.com podmonitors.monitoring.coreos.com --kubeconfig $KUBECONFIG
 
 # Delete the secret with access information to the long term storage
 kubectl delete secret slate-metrics-bucket --namespace $NAMESPACE --kubeconfig $KUBECONFIG
