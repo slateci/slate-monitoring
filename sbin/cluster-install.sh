@@ -27,15 +27,15 @@ cp $BUCKET $TMP_DIR/bucket.yaml
 # Prepare Helm values file for Prometherus/Thanos installation
 cat > $TMP_DIR/prom-values.yaml <<EOF
 grafana:
-  enabled: false
-  service:
-    type: LoadBalancer
+  enabled: true
+#  service:
+#    type: LoadBalancer
 
-prometheusOperator:
-  image:
-    tag: v0.29.0
-  prometheusConfigReloaderImage:
-    tag: v0.29.0
+#prometheusOperator:
+#  image:
+#    tag: v0.29.0
+#  prometheusConfigReloaderImage:
+#    tag: v0.29.0
 
 prometheus:
   prometheusSpec:
@@ -45,7 +45,7 @@ prometheus:
       site: $SITE
       cluster: $CLUSTER
     thanos:
-      image: thanosio/thanos:v0.4.0
+#      image: thanosio/thanos:v0.4.0
       objectStorageConfig:
         name: slate-metrics-bucket
         key: bucket.yaml
@@ -78,7 +78,7 @@ kubectl create namespace $NAMESPACE --kubeconfig $KUBECONFIG
 kubectl create secret generic slate-metrics-bucket --from-file=$TMP_DIR/bucket.yaml --namespace $NAMESPACE --kubeconfig $KUBECONFIG
 
 # Install the prometheus operator
-helm install --values $TMP_DIR/prom-values.yaml --name prometheus-operator --namespace $NAMESPACE stable/prometheus-operator --kubeconfig $KUBECONFIG
+helm install --values $TMP_DIR/prom-values.yaml prometheus-operator --version 8.5.14 --namespace $NAMESPACE stable/prometheus-operator --kubeconfig $KUBECONFIG
 
 # Expose the thanos-store
 kubectl apply -f $TMP_DIR/thanos-store.yaml --namespace $NAMESPACE --kubeconfig $KUBECONFIG
