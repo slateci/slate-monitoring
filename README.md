@@ -14,6 +14,23 @@ private - where to place the credentials for the bin scripts to work
 
 Run the commands without arguments to see the usage.
 
+## Installation (platform components)
+
+1. Make sure you have an S3 bucket on OSiRIS created with the appropriate credentials
+1. Make sure you have the kubeconfig file to the kubernetes cluster, which should have an ingress appropriately setup
+1. Use sbin/generate-bucket-configuration.sh to generate the bucket.yaml
+1. Use sbin/platform-install.sh to install the platform components
+1. Use sbin/platform-status.sh to check the pods and services
+1. Use sbin/platform-delete.sh to remove the platform components
+
+## Installation (cluster components)
+
+1. Make sure you have the credentials for the S3 bucket
+1. Use sbin/generate-bucket-configuration.sh to generate the bucket.yaml
+1. Use sbin/cluster-install.sh to install the cluster components
+1. Use sbin/cluster-status.sh to check the pods and services
+1. Use sbin/cluster-delete.sh to remove the cluster components
+
 ## How to manually generate credentials for OSiRIS
 
 1. Go to https://comanage.osris.org/registry/
