@@ -19,7 +19,7 @@ Run the commands without arguments to see the usage.
 1. Make sure you have an S3 bucket on OSiRIS created with the appropriate credentials
 1. Make sure you have the kubeconfig file to the kubernetes cluster, which should have an ingress appropriately setup
 1. Use sbin/generate-bucket-configuration.sh to generate the bucket.yaml
-1. Use sbin/platform-install.sh to install the platform components
+1. Use sbin/platform-install.sh to install the platform components (NOTE: depending on the amount of data in the bucket, it may take some time for the thanos-store to initialize)
 1. Use sbin/platform-status.sh to check the pods and services
 1. Use sbin/platform-delete.sh to remove the platform components
 
