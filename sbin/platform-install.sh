@@ -141,6 +141,8 @@ dashboards:
       url: https://raw.githubusercontent.com/slateci/slate-monitoring/master/dashboards/kubernetes-usagebynamespace.json
     kubernetes-usagebycluster:
       url: https://raw.githubusercontent.com/slateci/slate-monitoring/master/dashboards/kubernetes-usagebycluster.json
+    kubernetes-cluster-status:
+      url: https://raw.githubusercontent.com/slateci/slate-monitoring/master/dashboards/kubernetes-cluster-status.json
     slate-usagebycluster:
       url: https://raw.githubusercontent.com/slateci/slate-monitoring/master/dashboards/slate-usagebycluster.json
     slate-usagebygroup:
