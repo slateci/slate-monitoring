@@ -149,6 +149,8 @@ dashboards:
       url: https://raw.githubusercontent.com/slateci/slate-monitoring/master/dashboards/slate-usagebyapplication.json
     slate-cluster-status:
       url: https://raw.githubusercontent.com/slateci/slate-monitoring/master/dashboards/slate-cluster-status.json
+    slate-node-status:
+      url: https://raw.githubusercontent.com/slateci/slate-monitoring/master/dashboards/slate-node-status.json
 EOF
 
 echo Creating platform namespace
