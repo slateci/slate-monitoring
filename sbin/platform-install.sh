@@ -95,7 +95,7 @@ EOF
 cat > $TMP_DIR/values-grafana.yaml <<EOF
 adminPassword: $GRAFANA_ADMIN_PASSWORD
 service:
-  type: LoadBalancer
+  type: ClusterIP
 ingress:
   enabled: true
   hosts:
