@@ -15,8 +15,13 @@ KUBECONFIG=`realpath $1`
 
 for ADDRESS in "${@:2}"
 do
-  CLUSTER_STORES="$CLUSTER_STORES          - --store=$ADDRESS:10901
+  if [[ $ADDRESS == *":"* ]]; then
+  CLUSTER_STORES="$CLUSTER_STORES          - --store=$ADDRESS
 "
+  else
+  CLUSTER_STORES="$CLUSTER_STORES          - --store=$ADDRESS:10901
+"   
+  fi   
 done
 
 # Move to script directory
