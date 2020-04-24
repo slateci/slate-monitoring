@@ -12,6 +12,7 @@ private - where to place the credentials for the bin scripts to work
   - bucket.yaml - credentials for the long term storage of thanos data
   - conf - directory containing kubernetes credentials for each cluster (i.e. cluster-name.conf)
   - cont/platform - the kubernetes credential for the platform
+  - bucketConf - directory containing S3 bucket credentials for each cluster (i.e. cluster-name.yaml and platform.yaml)
   - grafana-url - the URL to be used for the grafana server in the platform installation
 ```
 
@@ -48,13 +49,14 @@ Make sure the private directory is populated as required above. The bin scripts 
 1. Use bin/platform-install.sh to install the platform components
 1. Use bin/platform-status.sh to check the pods and services
 1. Use bin/platform-delete.sh to remove the platform components
-1. Use bin/cluster-install.sh CLUSTER_NAME to install the cluster components (must match name in private/conf/CLUSTER_NAME.conf)
-1. Use bin/cluster-status.sh CLUSTER_NAME to check the pods and services (must match name in private/conf/CLUSTER_NAME.conf)
-1. Use bin/cluster-delete.sh CLUSTER_NAME to remove the cluster components (must match name in private/conf/CLUSTER_NAME.conf)
+1. Use bin/cluster-install.sh CLUSTER_NAME to install the cluster components (must match name in private/conf/CLUSTER_NAME.conf and private/bucketConf/CLUSTER_NAME.yaml)
+1. Use bin/cluster-status.sh CLUSTER_NAME to check the pods and services (must match name in private/conf/CLUSTER_NAME.conf and private/bucketConf/CLUSTER_NAME.yaml)
+1. Use bin/cluster-delete.sh CLUSTER_NAME to remove the cluster components (must match name in private/conf/CLUSTER_NAME.conf and private/bucketConf/CLUSTER_NAME.yaml)
 1. Use bin/list-addresses.sh to query the IP address of all clusters; use the info to populate private/address-list
 1. Use bin/platform-address-list-update.sh to notify the platform of changes in the cluster ips
 
 ## Changelog
+- Added support for one bucket credential per cluster
 - Added bin scripts for platform installation
 - Added new more detailed dashboards
 - Added scripts for platform installation
