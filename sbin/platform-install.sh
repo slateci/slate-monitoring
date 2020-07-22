@@ -114,6 +114,8 @@ grafana.ini:
     enabled: true
     org_name: Main Org.
     org_role: Viewer
+plugins:
+  - grafana-piechart-panel
 datasources: 
   datasources.yaml:
     apiVersion: 1
