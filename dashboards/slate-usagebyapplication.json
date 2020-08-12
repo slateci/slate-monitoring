@@ -15,51 +15,59 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 16,
-  "iteration": 1570707893846,
+  "id": 9,
+  "iteration": 1597242689720,
   "links": [],
   "panels": [
     {
       "aliasColors": {},
       "bars": false,
+      "cacheTimeout": null,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
-      "fill": 10,
+      "datasource": "SLATE",
+      "fill": 3,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 6,
+      "hiddenSeries": false,
+      "id": 9,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=~\"$namespace\",pod_name=~\"$instance-\\\\w*-.....\"}",
+          "expr": "rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=\"\"}[1m])",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{pod_name}}",
+          "legendFormat": "App CPU usage",
           "refId": "A"
         }
       ],
@@ -67,7 +75,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "CPU usage by instance",
+      "title": "CPU usage by application",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -83,11 +91,11 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "percentunit",
           "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
+          "max": "1",
+          "min": "0",
           "show": true
         },
         {
@@ -96,7 +104,7 @@
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -109,28 +117,35 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
-      "fill": 10,
+      "datasource": "SLATE",
+      "fill": 3,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 24,
         "x": 0,
         "y": 9
       },
+      "hiddenSeries": false,
       "id": 3,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null as zero",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -141,18 +156,35 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "container_memory_rss{cluster=~\"$cluster\",namespace=~\"$namespace\",pod_name=~\"$instance-\\\\w*-.....\"}",
+          "expr": "container_memory_rss{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=\"\"}",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 2,
-          "legendFormat": "{{pod_name}}",
+          "legendFormat": "RSS",
           "refId": "A"
+        },
+        {
+          "expr": "container_memory_cache{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=\"\"}",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 2,
+          "legendFormat": "Cache",
+          "refId": "C"
+        },
+        {
+          "expr": "container_memory_swap{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\",container=\"\"}",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 2,
+          "legendFormat": "Swap",
+          "refId": "D"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Memory usage by instance",
+      "title": "Memory usage by application",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -168,11 +200,11 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "decbytes",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -194,50 +226,71 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
-      "fill": 10,
+      "datasource": "SLATE",
+      "fill": 4,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
         "w": 24,
         "x": 0,
         "y": 18
       },
-      "id": 4,
+      "hiddenSeries": false,
+      "id": 12,
       "legend": {
+        "alignAsTable": true,
         "avg": false,
-        "current": false,
+        "current": true,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
-        "values": false
+        "values": true
       },
       "lines": true,
-      "linewidth": 0,
+      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null as zero",
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "alias": "/.*Trans.*/",
+          "transform": "negative-Y"
+        }
+      ],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "container_fs_reads_bytes_total{cluster=~\"$cluster\",namespace=~\"$namespace\",pod_name=~\"$instance-\\\\w*-.....\"}",
+          "expr": "sum(irate(container_network_receive_bytes_total{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\"}[5m])*8)",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{pod_name}}",
+          "legendFormat": "Pod Network Receive",
           "refId": "A"
+        },
+        {
+          "expr": "sum(irate(container_network_transmit_bytes_total{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\"}[5m])*8)",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "intervalFactor": 2,
+          "legendFormat": "Pod Network Transmit",
+          "refId": "B"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Local FS usage by instance",
+      "title": "Network usage by application",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -253,7 +306,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
+          "format": "bps",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -266,7 +319,108 @@
           "logBase": 1,
           "max": null,
           "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "SLATE",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null as zero",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(container_fs_usage_bytes{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\"})",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 2,
+          "legendFormat": "Disk Occupied",
+          "refId": "A"
+        },
+        {
+          "expr": "max(container_fs_limit_bytes{cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"$pod\"})",
+          "format": "time_series",
+          "hide": false,
+          "intervalFactor": 2,
+          "legendFormat": "Disk Total Space",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Disk usage by application",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "decbytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
           "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
         }
       ],
       "yaxis": {
@@ -275,7 +429,7 @@
       }
     }
   ],
-  "schemaVersion": 18,
+  "schemaVersion": 21,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -333,14 +487,14 @@
           ]
         },
         "datasource": "$datasource",
-        "definition": "label_values(kube_pod_info, namespace)",
+        "definition": "label_values(kube_pod_info{cluster=~\"$cluster\"}, namespace)",
         "hide": 0,
         "includeAll": true,
         "label": "namespace",
         "multi": true,
         "name": "namespace",
         "options": [],
-        "query": "label_values(kube_pod_info, namespace)",
+        "query": "label_values(kube_pod_info{cluster=~\"$cluster\"}, namespace)",
         "refresh": 1,
         "regex": "slate-.*",
         "skipUrlSync": false,
@@ -354,29 +508,404 @@
       {
         "allValue": null,
         "current": {
-          "text": "slate-dev-nginx-default",
-          "value": "slate-dev-nginx-default"
+          "tags": [],
+          "text": "prometheus-operator-prometheus-node-exporter-qncmn",
+          "value": "prometheus-operator-prometheus-node-exporter-qncmn"
         },
         "datasource": "$datasource",
-        "definition": "",
+        "definition": "label_values(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=~\"$namespace\"}, pod)",
         "hide": 0,
         "includeAll": false,
-        "label": "instance",
+        "label": "pod",
         "multi": false,
-        "name": "instance",
+        "name": "pod",
         "options": [
           {
-            "isNone": true,
+            "selected": false,
+            "text": "alertmanager-prometheus-operator-alertmanager-0",
+            "value": "alertmanager-prometheus-operator-alertmanager-0"
+          },
+          {
+            "selected": false,
+            "text": "atlas-xcache-xcache-global-85f6d55775-kgbgb",
+            "value": "atlas-xcache-xcache-global-85f6d55775-kgbgb"
+          },
+          {
+            "selected": false,
+            "text": "cert-manager-74d7d5cb69-sj6qf",
+            "value": "cert-manager-74d7d5cb69-sj6qf"
+          },
+          {
+            "selected": false,
+            "text": "cert-manager-cainjector-5685df6cc4-npqq2",
+            "value": "cert-manager-cainjector-5685df6cc4-npqq2"
+          },
+          {
+            "selected": false,
+            "text": "cert-manager-webhook-7f664b4595-6gts2",
+            "value": "cert-manager-webhook-7f664b4595-6gts2"
+          },
+          {
+            "selected": false,
+            "text": "check-mk-global-9dc5d9cb7-r8shv",
+            "value": "check-mk-global-9dc5d9cb7-r8shv"
+          },
+          {
+            "selected": false,
+            "text": "condor-manager-soundar-7894dbc7-n8xbz",
+            "value": "condor-manager-soundar-7894dbc7-n8xbz"
+          },
+          {
+            "selected": false,
+            "text": "condor-worker-soundar-759cd99d97-wprll",
+            "value": "condor-worker-soundar-759cd99d97-wprll"
+          },
+          {
+            "selected": false,
+            "text": "globus-connect-v4-585b4fd846-smtj2",
+            "value": "globus-connect-v4-585b4fd846-smtj2"
+          },
+          {
+            "selected": false,
+            "text": "globus-connect-v4-58df597b78-d6pn4",
+            "value": "globus-connect-v4-58df597b78-d6pn4"
+          },
+          {
+            "selected": false,
+            "text": "globus-connect-v4-74cffc9ccd-vgrn6",
+            "value": "globus-connect-v4-74cffc9ccd-vgrn6"
+          },
+          {
+            "selected": false,
+            "text": "globus-connect-v4-slate-demo-fd5c7c5f9-pl7d9",
+            "value": "globus-connect-v4-slate-demo-fd5c7c5f9-pl7d9"
+          },
+          {
+            "selected": false,
+            "text": "globus-connect-v4-slate-uutah-5444446d8c-4487p",
+            "value": "globus-connect-v4-slate-uutah-5444446d8c-4487p"
+          },
+          {
+            "selected": false,
+            "text": "globus-connect-v4-tacc-datadisk-5d77684c47-vhlfk",
+            "value": "globus-connect-v4-tacc-datadisk-5d77684c47-vhlfk"
+          },
+          {
+            "selected": false,
+            "text": "globus-connect-v4-veritas-d4c6b9db6-v7x42",
+            "value": "globus-connect-v4-veritas-d4c6b9db6-v7x42"
+          },
+          {
+            "selected": false,
+            "text": "grafana-slate-859df7bbc5-h4k2g",
+            "value": "grafana-slate-859df7bbc5-h4k2g"
+          },
+          {
+            "selected": false,
+            "text": "gridftp-tacc-atlas-788db9d5c5-2ncxs",
+            "value": "gridftp-tacc-atlas-788db9d5c5-2ncxs"
+          },
+          {
+            "selected": false,
+            "text": "nginx-default-76b89fc64-6tqwp",
+            "value": "nginx-default-76b89fc64-6tqwp"
+          },
+          {
+            "selected": false,
+            "text": "nginx-default-76b89fc64-qjtnz",
+            "value": "nginx-default-76b89fc64-qjtnz"
+          },
+          {
+            "selected": false,
+            "text": "nginx-default-76b89fc64-xh8pd",
+            "value": "nginx-default-76b89fc64-xh8pd"
+          },
+          {
+            "selected": false,
+            "text": "nginx-ingress-controller-5954fd9659-rblnm",
+            "value": "nginx-ingress-controller-5954fd9659-rblnm"
+          },
+          {
+            "selected": false,
+            "text": "nginx-ingress-controller-75bb9dc5bb-556l9",
+            "value": "nginx-ingress-controller-75bb9dc5bb-556l9"
+          },
+          {
+            "selected": false,
+            "text": "nginx-ingress-controller-75bb9dc5bb-ftcph",
+            "value": "nginx-ingress-controller-75bb9dc5bb-ftcph"
+          },
+          {
+            "selected": false,
+            "text": "nginx-tutorial-797c8f4cd9-kdp5d",
+            "value": "nginx-tutorial-797c8f4cd9-kdp5d"
+          },
+          {
+            "selected": false,
+            "text": "osg-frontier-squid-574cc87c8f-gwxrx",
+            "value": "osg-frontier-squid-574cc87c8f-gwxrx"
+          },
+          {
+            "selected": false,
+            "text": "osg-frontier-squid-bd6475d68-jq799",
+            "value": "osg-frontier-squid-bd6475d68-jq799"
+          },
+          {
+            "selected": false,
+            "text": "osg-frontier-squid-cvmfs-78cdcf87f6-l58rf",
+            "value": "osg-frontier-squid-cvmfs-78cdcf87f6-l58rf"
+          },
+          {
+            "selected": false,
+            "text": "osg-frontier-squid-cvmfs-7f95d6c794-674sm",
+            "value": "osg-frontier-squid-cvmfs-7f95d6c794-674sm"
+          },
+          {
+            "selected": false,
+            "text": "osg-frontier-squid-global-dc6d85565-gwc9b",
+            "value": "osg-frontier-squid-global-dc6d85565-gwc9b"
+          },
+          {
+            "selected": false,
+            "text": "osg-frontier-squid-mwt2-uc-7c697fd848-rtl89",
+            "value": "osg-frontier-squid-mwt2-uc-7c697fd848-rtl89"
+          },
+          {
+            "selected": false,
+            "text": "osg-hosted-ce-clarkson-acres-79ccbf66d9-pg2jr",
+            "value": "osg-hosted-ce-clarkson-acres-79ccbf66d9-pg2jr"
+          },
+          {
+            "selected": false,
+            "text": "osg-hosted-ce-kingspeak-64fbd7bb98-kgsvf",
+            "value": "osg-hosted-ce-kingspeak-64fbd7bb98-kgsvf"
+          },
+          {
+            "selected": false,
+            "text": "osg-hosted-ce-lonepeak-5dfd47b855-smpdr",
+            "value": "osg-hosted-ce-lonepeak-5dfd47b855-smpdr"
+          },
+          {
+            "selected": false,
+            "text": "osg-hosted-ce-notchpeak-99ff6b579-txcgz",
+            "value": "osg-hosted-ce-notchpeak-99ff6b579-txcgz"
+          },
+          {
+            "selected": false,
+            "text": "osg-hosted-ce-uchicago-grid-687946bb4f-9prdk",
+            "value": "osg-hosted-ce-uchicago-grid-687946bb4f-9prdk"
+          },
+          {
+            "selected": false,
+            "text": "osg-hosted-ce-uiuc-htc-59d6f6468-jjqv2",
+            "value": "osg-hosted-ce-uiuc-htc-59d6f6468-jjqv2"
+          },
+          {
+            "selected": false,
+            "text": "perfsonar-testpoint-7f5fdd77f4-mpms9",
+            "value": "perfsonar-testpoint-7f5fdd77f4-mpms9"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-grafana-8655856865-t4m2b",
+            "value": "prometheus-operator-grafana-8655856865-t4m2b"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-grafana-8655856865-xrq42",
+            "value": "prometheus-operator-grafana-8655856865-xrq42"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-grafana-87b999899-wglqd",
+            "value": "prometheus-operator-grafana-87b999899-wglqd"
+          },
+          {
             "selected": true,
-            "text": "None",
-            "value": ""
+            "text": "prometheus-operator-kube-state-metrics-5b7ff6d444-54fkp",
+            "value": "prometheus-operator-kube-state-metrics-5b7ff6d444-54fkp"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-kube-state-metrics-64c57954cb-hn4qd",
+            "value": "prometheus-operator-kube-state-metrics-64c57954cb-hn4qd"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-kube-state-metrics-64c57954cb-tbv56",
+            "value": "prometheus-operator-kube-state-metrics-64c57954cb-tbv56"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-operator-5455bc9fd6-rphkc",
+            "value": "prometheus-operator-operator-5455bc9fd6-rphkc"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-operator-6d594696b6-dpbm2",
+            "value": "prometheus-operator-operator-6d594696b6-dpbm2"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-operator-6d594696b6-f7f78",
+            "value": "prometheus-operator-operator-6d594696b6-f7f78"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-2t5zh",
+            "value": "prometheus-operator-prometheus-node-exporter-2t5zh"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-2w8pn",
+            "value": "prometheus-operator-prometheus-node-exporter-2w8pn"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-2wqnw",
+            "value": "prometheus-operator-prometheus-node-exporter-2wqnw"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-4jg7f",
+            "value": "prometheus-operator-prometheus-node-exporter-4jg7f"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-6lcb5",
+            "value": "prometheus-operator-prometheus-node-exporter-6lcb5"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-8bwwg",
+            "value": "prometheus-operator-prometheus-node-exporter-8bwwg"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-bbf6b",
+            "value": "prometheus-operator-prometheus-node-exporter-bbf6b"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-f7ns2",
+            "value": "prometheus-operator-prometheus-node-exporter-f7ns2"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-frv8q",
+            "value": "prometheus-operator-prometheus-node-exporter-frv8q"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-ggs9n",
+            "value": "prometheus-operator-prometheus-node-exporter-ggs9n"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-jjfr2",
+            "value": "prometheus-operator-prometheus-node-exporter-jjfr2"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-qncmn",
+            "value": "prometheus-operator-prometheus-node-exporter-qncmn"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-w5mcn",
+            "value": "prometheus-operator-prometheus-node-exporter-w5mcn"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-operator-prometheus-node-exporter-xr8nv",
+            "value": "prometheus-operator-prometheus-node-exporter-xr8nv"
+          },
+          {
+            "selected": false,
+            "text": "prometheus-prometheus-operator-prometheus-0",
+            "value": "prometheus-prometheus-operator-prometheus-0"
+          },
+          {
+            "selected": false,
+            "text": "slate-dev-jupyter-notebook-soundarjupyter-75dfbddcc8-fhxl2",
+            "value": "slate-dev-jupyter-notebook-soundarjupyter-75dfbddcc8-fhxl2"
+          },
+          {
+            "selected": false,
+            "text": "slate-dev-login-node-lincoln-test-74d5f7b4f7-m4rbs",
+            "value": "slate-dev-login-node-lincoln-test-74d5f7b4f7-m4rbs"
+          },
+          {
+            "selected": false,
+            "text": "slate-dev-nginx-default-5499759c6b-lbfzc",
+            "value": "slate-dev-nginx-default-5499759c6b-lbfzc"
+          },
+          {
+            "selected": false,
+            "text": "slate-dev-nginx-lincolnb-7c58d66468-qtvws",
+            "value": "slate-dev-nginx-lincolnb-7c58d66468-qtvws"
+          },
+          {
+            "selected": false,
+            "text": "slate-dev-nginx-mhddefault-79b86c7875-69h2f",
+            "value": "slate-dev-nginx-mhddefault-79b86c7875-69h2f"
+          },
+          {
+            "selected": false,
+            "text": "slate-dev-perfsonar-testpoint-5d898f997f-phsj6",
+            "value": "slate-dev-perfsonar-testpoint-5d898f997f-phsj6"
+          },
+          {
+            "selected": false,
+            "text": "slate-dev-perfsonar-testpoint-69cbd6f995-jnlvx",
+            "value": "slate-dev-perfsonar-testpoint-69cbd6f995-jnlvx"
+          },
+          {
+            "selected": false,
+            "text": "slate-dev-stashcache-umich-test-79d4f4cc6d-qj6pp",
+            "value": "slate-dev-stashcache-umich-test-79d4f4cc6d-qj6pp"
+          },
+          {
+            "selected": false,
+            "text": "stashcache-58ccc89bd7-d7ljt",
+            "value": "stashcache-58ccc89bd7-d7ljt"
+          },
+          {
+            "selected": false,
+            "text": "stashcache-demo-69f8875fbf-2rvkx",
+            "value": "stashcache-demo-69f8875fbf-2rvkx"
+          },
+          {
+            "selected": false,
+            "text": "stashcache-demo-69f8875fbf-n8jkq",
+            "value": "stashcache-demo-69f8875fbf-n8jkq"
+          },
+          {
+            "selected": false,
+            "text": "stashcache-test-stashcache-ccf585c9d-zp8dr",
+            "value": "stashcache-test-stashcache-ccf585c9d-zp8dr"
+          },
+          {
+            "selected": false,
+            "text": "thanos-query-695cff77b4-p5sv8",
+            "value": "thanos-query-695cff77b4-p5sv8"
+          },
+          {
+            "selected": false,
+            "text": "thanos-store-54fd94fff4-vwvjb",
+            "value": "thanos-store-54fd94fff4-vwvjb"
+          },
+          {
+            "selected": false,
+            "text": "xcache-global-75f57774-4s7wb",
+            "value": "xcache-global-75f57774-4s7wb"
           }
         ],
-        "query": "",
+        "query": "label_values(container_cpu_usage_seconds_total{cluster=~\"$cluster\",namespace=~\"$namespace\"}, pod)",
         "refresh": 0,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -417,5 +946,5 @@
   "timezone": "",
   "title": "SLATE / Usage by application",
   "uid": "qZHpHV5Zk",
-  "version": 6
+  "version": 12
 }
