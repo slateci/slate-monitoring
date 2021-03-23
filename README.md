@@ -18,6 +18,32 @@ private - where to place the credentials for the bin scripts to work
 
 Run the commands without arguments to see the usage.
 
+## Scripts for cluster managements (bin)
+For the main SLATE platform, the repository is deployed on api.slateci.net in /home/centos/slate-monitoring and properly configured. For a different SLATE platform, make sure the private directory is populated as required above. The bin scripts get the information in "private" and then call the sbin script appropriately.
+
+1. Use bin/platform-install.sh to install the platform components
+1. Use bin/platform-status.sh to check the pods and services
+1. Use bin/platform-delete.sh to remove the platform components
+1. Use bin/cluster-install.sh CLUSTER_NAME to install the cluster components (must match name in private/conf/CLUSTER_NAME.conf and private/bucketConf/CLUSTER_NAME.yaml)
+1. Use bin/cluster-status.sh CLUSTER_NAME to check the pods and services (must match name in private/conf/CLUSTER_NAME.conf and private/bucketConf/CLUSTER_NAME.yaml)
+1. Use bin/cluster-delete.sh CLUSTER_NAME to remove the cluster components (must match name in private/conf/CLUSTER_NAME.conf and private/bucketConf/CLUSTER_NAME.yaml)
+1. Use bin/list-addresses.sh to query the IP address of all clusters; use the info to populate private/address-list
+1. Use bin/platform-address-list-update.sh to notify the platform of changes in the cluster ips
+
+## How to add a cluster (after cluster installation)
+For the main SLATE platform, login to api.slateci.net and cd to /home/centos/slate-monitoring.
+
+1. Edit private/address-list and add the IP address of the thanos-store at the end
+1. Run bin/platform-address-list-update.sh
+
+## How to manually generate credentials for OSiRIS
+
+1. Go to https://comanage.osris.org/registry/
+1. Login
+1. Top right, menu from the username, Ceph Credentials/OSiRIS
+1. In the list of the user "slate-monitoring", use the plus icon (Add new S3 access key)
+1. Use sbin/generate-bucket-configuration.sh to generate the appropriate bucket.yaml
+
 ## Installation (platform components)
 
 1. Make sure you have an S3 bucket on OSiRIS created with the appropriate credentials
@@ -34,26 +60,6 @@ Run the commands without arguments to see the usage.
 1. Use sbin/cluster-install.sh to install the cluster components
 1. Use sbin/cluster-status.sh to check the pods and services
 1. Use sbin/cluster-delete.sh to remove the cluster components
-
-## How to manually generate credentials for OSiRIS
-
-1. Go to https://comanage.osris.org/registry/
-1. Login
-1. Top left, menu from the username, Ceph Credentials/OSiRIS
-1. In the list of the user "slate-monitoring", use the plus icon (Add new S3 access key)
-1. Use sbin/generate-bucket-configuration.sh to generate the appropriate bucket.yaml
-
-## Scritps for cluster managements (bin)
-Make sure the private directory is populated as required above. The bin scripts get the information in "private" and then call the sbin script appropriately.
-
-1. Use bin/platform-install.sh to install the platform components
-1. Use bin/platform-status.sh to check the pods and services
-1. Use bin/platform-delete.sh to remove the platform components
-1. Use bin/cluster-install.sh CLUSTER_NAME to install the cluster components (must match name in private/conf/CLUSTER_NAME.conf and private/bucketConf/CLUSTER_NAME.yaml)
-1. Use bin/cluster-status.sh CLUSTER_NAME to check the pods and services (must match name in private/conf/CLUSTER_NAME.conf and private/bucketConf/CLUSTER_NAME.yaml)
-1. Use bin/cluster-delete.sh CLUSTER_NAME to remove the cluster components (must match name in private/conf/CLUSTER_NAME.conf and private/bucketConf/CLUSTER_NAME.yaml)
-1. Use bin/list-addresses.sh to query the IP address of all clusters; use the info to populate private/address-list
-1. Use bin/platform-address-list-update.sh to notify the platform of changes in the cluster ips
 
 ## Changelog
 - Added support for one bucket credential per cluster
