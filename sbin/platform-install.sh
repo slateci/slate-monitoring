@@ -50,7 +50,7 @@ spec:
     spec:
       containers:
       - name: store-gateway
-        image: thanosio/thanos:v0.8.1
+        image: thanosio/thanos:v0.21.1
         args:
           - store
           - --data-dir=/var/thanos/store
@@ -94,8 +94,8 @@ EOF
 # Prepare Thanos Store deployment
 cat > $TMP_DIR/values-grafana.yaml <<EOF
 adminPassword: $GRAFANA_ADMIN_PASSWORD
-service:
-  type: ClusterIP
+#service:
+#  type: ClusterIP
 ingress:
   enabled: true
   hosts:
@@ -169,6 +169,6 @@ echo Install the thanos-store
 kubectl apply -f $TMP_DIR/thanos-store.yaml --namespace $PLATFORM_NAMESPACE --kubeconfig $KUBECONFIG
 
 echo Install grafana
-helm install grafana-slate stable/grafana --values $TMP_DIR/values-grafana.yaml --namespace $PLATFORM_NAMESPACE --kubeconfig $KUBECONFIG
+helm install grafana-slate grafana/grafana --values $TMP_DIR/values-grafana.yaml --namespace $PLATFORM_NAMESPACE --kubeconfig $KUBECONFIG --version 6.13.9
 
 ./platform-address-list-update.sh $KUBECONFIG

@@ -56,7 +56,7 @@ spec:
     spec:
       containers:
       - name: query
-        image: thanosio/thanos:v0.8.1
+        image: thanosio/thanos:v0.21.1
         args:
           - query
           - --http-address=\$(POD_IP):9090

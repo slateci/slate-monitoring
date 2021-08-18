@@ -78,7 +78,7 @@ kubectl create namespace $NAMESPACE --kubeconfig $KUBECONFIG
 kubectl create secret generic slate-metrics-bucket --from-file=$TMP_DIR/bucket.yaml --namespace $NAMESPACE --kubeconfig $KUBECONFIG
 
 # Install the prometheus operator
-helm install --values $TMP_DIR/prom-values.yaml prometheus-operator --version 8.5.14 --namespace $NAMESPACE stable/prometheus-operator --kubeconfig $KUBECONFIG
+helm install --values $TMP_DIR/prom-values.yaml prometheus-operator --namespace $NAMESPACE prometheus-community/kube-prometheus-stack --kubeconfig $KUBECONFIG --version 17.1.3
 
 # Expose the thanos-store
 kubectl apply -f $TMP_DIR/thanos-store.yaml --namespace $NAMESPACE --kubeconfig $KUBECONFIG

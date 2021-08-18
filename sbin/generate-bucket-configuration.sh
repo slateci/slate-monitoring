@@ -27,7 +27,6 @@ config:
   access_key: \"$ACCESS_KEY\"
   insecure: true
   signature_version2: false
-  encrypt_sse: false
   secret_key: \"$SECRET_KEY\"
   put_user_metadata: {}
   http_config:
