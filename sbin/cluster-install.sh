@@ -31,13 +31,9 @@ grafana:
 #  service:
 #    type: LoadBalancer
 
-#prometheusOperator:
-#  image:
-#    tag: v0.29.0
-#  prometheusConfigReloaderImage:
-#    tag: v0.29.0
-
 prometheus:
+  thanosServiceExternal:
+    enabled: true
   prometheusSpec:
     image:
       tag: v2.14.0
@@ -45,30 +41,10 @@ prometheus:
       site: $SITE
       cluster: $CLUSTER
     thanos:
-#      image: thanosio/thanos:v0.4.0
       objectStorageConfig:
         name: slate-metrics-bucket
         key: bucket.yaml
 
-EOF
-
-# Prepare Service description to expose thanos sidecar
-cat > $TMP_DIR/thanos-store.yaml <<EOF
-apiVersion: v1
-kind: Service
-metadata:
-  name: thanos-store
-  labels:
-    thanos: store
-spec:
-  type: LoadBalancer
-  selector:
-    app: prometheus
-    prometheus: prometheus-operator-prometheus
-  ports:
-  - protocol: TCP
-    port: 10901
-    targetPort: 10901
 EOF
 
 # Create namespace slate-monitoring
@@ -79,6 +55,3 @@ kubectl create secret generic slate-metrics-bucket --from-file=$TMP_DIR/bucket.y
 
 # Install the prometheus operator
 helm install --values $TMP_DIR/prom-values.yaml prometheus-operator --namespace $NAMESPACE prometheus-community/kube-prometheus-stack --kubeconfig $KUBECONFIG --version 17.1.3
-
-# Expose the thanos-store
-kubectl apply -f $TMP_DIR/thanos-store.yaml --namespace $NAMESPACE --kubeconfig $KUBECONFIG
