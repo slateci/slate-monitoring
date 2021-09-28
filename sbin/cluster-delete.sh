@@ -19,9 +19,6 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 # Get global parameters
 source global.param
 
-# Removing port for thanos-store
-kubectl delete service/thanos-store --namespace $NAMESPACE --kubeconfig $KUBECONFIG
-
 # Delete the old installation
 helm delete prometheus-operator --namespace $NAMESPACE --kubeconfig $KUBECONFIG
 sleep 5
