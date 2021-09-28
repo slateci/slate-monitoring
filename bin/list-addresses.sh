@@ -9,6 +9,6 @@ echo
 for CLUSTER in `./list-clusters.sh` ; do
     KUBECONFIG=../private/conf/$CLUSTER.conf
     echo IP for $CLUSTER:
-    kubectl get service thanos-store --namespace slate-monitoring --kubeconfig $KUBECONFIG --output=custom-columns=IP:.status.loadBalancer.ingress[*].ip --no-headers=true 
+    kubectl get service prometheus-operator-kube-p-thanos-external --namespace slate-monitoring --kubeconfig $KUBECONFIG --output=custom-columns=IP:.status.loadBalancer.ingress[*].ip --no-headers=true 
 done
 
