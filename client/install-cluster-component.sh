@@ -87,4 +87,16 @@ kubectl create secret generic slate-metrics-bucket --from-file=$TMP_DIR/bucket.y
 # Install the prometheus operator
 helm install --values $TMP_DIR/prom-values.yaml prometheus-operator --namespace $MONITORING_NAMESPACE prometheus-community/kube-prometheus-stack --kubeconfig $KUBECONF_LOCATION --version 17.1.3
 
+# Get IP
+THANOS_IP=`kubectl --kubeconfig $KUBECONF_LOCATION --namespace $MONITORING_NAMESPACE get service prometheus-operator-kube-p-thanos-external -o jsonpath={.status.loadBalancer.ingress[0].ip}`
+if [ "$?" -ne 0 ]; then
+    echo Failed to find the Thanos service status
+elif [ -z "$THANOS_IP" ]; then
+    echo The Thanos service has not received an IP address
+    echo This can happen if a LoadBalancer is not installed in the cluster, or has exhausted its pool of allocatable address
+else
+    echo The address of your Thanos service is $THANOS_IP
+    echo Please give this information to the SLATE platform administrators to have it added to the central monitoring infrastructure
+fi
+
 rm -rf $TMP_DIR
