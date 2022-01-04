@@ -103,6 +103,8 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: "slate"
     certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    acme.cert-manager.io/http01-edit-in-place: "true"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "Content-Security-Policy: frame-ancestors 'self' *.slateci.io *.slateci.net" "X-Frame-Options: allow-from *.slateci.io";
   tls:
